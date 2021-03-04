@@ -1,0 +1,33 @@
+{
+  "name": "rockswap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy-testnet": "npx hardhat run --network bsctest scripts/deploy.js",
+    "timelock-testnet": "npx hardhat run --network bsctest scripts/timelock.js",
+    "deploy-mainnet": "npx hardhat run --network bsc scripts/deploy.js",
+    "timelock-mainnet": "npx hardhat run --network bsc scripts/timelock.js",
+    "flatten": "npm run flatten:masterchef && npm run flatten:timelock && npm run flatten:token",
+    "flatten:masterchef": "npx hardhat flatten ./contracts/MasterChef.sol > ./flatten/MasterChef_flat.sol",
+    "flatten:timelock": "npx hardhat flatten ./contracts/Timelock.sol > ./flatten/Timelock_flat.sol",
+    "flatten:token": "npx hardhat flatten ./contracts/RockToken.sol > ./flatten/RockToken_flat.sol",
+    "compile": "npx hardhat compile"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.1",
+    "@nomiclabs/hardhat-etherscan": "^2.1.1",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/test-helpers": "^0.5.10",
+    "@pancakeswap/pancake-swap-lib": "0.0.4",
+    "chai": "^4.3.0",
+    "ethereum-waffle": "^3.2.2",
+    "ethers": "^5.0.31",
+    "hardhat": "^2.0.11"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
