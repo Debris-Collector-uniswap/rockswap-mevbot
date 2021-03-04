@@ -10,8 +10,8 @@ const PANCAKE_FACTORY_TESTNET = '0xF407cd098c8FD46929ECeFEC28dcC5CBf064A578';
 const DEV_ADDR = '0x8347B6948e062837c0aa35b14275e827c796b577';
 const FEE_ADDR = '0x8347B6948e062837c0aa35b14275e827c796b577';
 
-const ROCK_PER_BLOCK = '4';
-const STARTING_BLOCK = 5369200;
+const ROCK_PER_BLOCK = '1';
+const STARTING_BLOCK = 5388585;
 const REWARDS_START_BLOCK = String(STARTING_BLOCK);
 
 const TIMELOCK_DELAY_SECS = (3600 * 24);
@@ -119,9 +119,9 @@ async function mainnetRelease(deployer, masterchef, rock) {
     const rockbusd = await createLP(deployer, PANCAKE_FACTORY_MAINET, rock.address, BUSD_ADDRESS);
 
     // -- Pools --
-    await addLP(masterchef, '1000', rock.address, '0', true);         // add ROCK pool to masterchef
-    await addLP(masterchef, '200', BUSD_ADDRESS, '400', true);        // add BUSD pool to masterchef
-    await addLP(masterchef, '300', WBNB_ADDRESS, '400', true);        // add WBNB pool to masterchef
+    // await addLP(masterchef, '1000', rock.address, '0', true);         // add ROCK pool to masterchef
+    // await addLP(masterchef, '200', BUSD_ADDRESS, '400', true);        // add BUSD pool to masterchef
+    // await addLP(masterchef, '300', WBNB_ADDRESS, '400', true);        // add WBNB pool to masterchef
 
     /*await addLP(masterchef, '100', USDT_ADDRESS, '400', true);        // add USDT pool to masterchef
     await addLP(masterchef, '200', BBTC_ADDRESS, '400', true);        // add BBTC pool to masterchef
@@ -134,8 +134,8 @@ async function mainnetRelease(deployer, masterchef, rock) {
     */
 
     // -- Farms --
-    await addLP(masterchef, '4000', rockbnb, '0', true);            // add ROCK-BNB farm to masterchef
-    await addLP(masterchef, '2400', rockbusd, '0', true);           // add ROCK-BUSD farm to masterchef
+    // await addLP(masterchef, '4000', rockbnb, '0', true);            // add ROCK-BNB farm to masterchef
+    // await addLP(masterchef, '2400', rockbusd, '0', true);           // add ROCK-BUSD farm to masterchef
 
     await addLP(masterchef, '400', BNB_BUSD_ADDRESS, '400', true);    // add BNB-BUSD farm to masterchef
 
@@ -154,24 +154,26 @@ async function mainnetRelease(deployer, masterchef, rock) {
 
 async function main() {
   const [deployer] = await ethers.getSigners();
-  //console.log(deployer)
+  console.log(deployer)
 
-  const rockToken = await deployRock();
-  const masterchef = await deployMasterChef(rockToken.address);
+  // const rockToken = await deployRock();
+  // const masterchef = await deployMasterChef(rockToken.address);
 
   // LP's for testnet
   // const [busd, bnb] = await deployTokens(); // only for testnet
   // await testnetRelease(deployer, masterchef, rockToken, bnb, busd);
 
   // LP's for mainet release
-  await mainnetRelease(deployer, masterchef, rockToken);
+  // await mainnetRelease(deployer, masterchef, rockToken);
 
-  await rockToken.transferOwnership(masterchef.address);
+  // await rockToken.transferOwnership(masterchef.address);
 
   const timelock = await deployTimelock();
+  console.log(timelock.address);
 
-  await masterchef.transferOwnership(timelock.address);
+  // await masterchef.transferOwnership(timelock.address);
 
+  /*
     console.table({
         MasterChef:masterchef.address,
         RockToken:rockToken.address,
@@ -179,6 +181,7 @@ async function main() {
         // BUSD: busd.address, // only for testnet
         // BNB: bnb.address, // only for testnet
     });
+    */
 }
 
 main()
